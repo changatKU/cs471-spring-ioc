@@ -1,20 +1,29 @@
 package atm;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.util.Map;
 
 /**
  * A bank contains customers with bank accounts.
  */
+@Component
 public class Bank {
 
+//   @Value("${bankName}")
    private String name;
    private Map<Integer,Customer> customers;
+//   @Autowired
    private DataSource dataSource;
 
    /**
     * Constructs a bank with no customers.
     */
-   public Bank(String name, DataSource dataSource) {
+   @Autowired
+   public Bank(@Value("${bankName}") String name, DataSource dataSource) {
       this.name = name;
       this.dataSource = dataSource;
       this.customers = dataSource.readCustomers();
@@ -34,6 +43,7 @@ public class Bank {
     * @return the matching customer, or null if no customer
     * matches
     */
+//   @PostConstruct
    public Customer findCustomer(int id) {
       return customers.get(id);
    }
