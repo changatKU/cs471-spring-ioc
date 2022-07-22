@@ -13,21 +13,21 @@ import java.util.Map;
 @Component
 public class Bank {
 
-//   @Value("${bankName}")
+   @Value("${bankName}")
    private String name;
    private Map<Integer,Customer> customers;
-//   @Autowired
+   @Autowired
    private DataSource dataSource;
 
    /**
     * Constructs a bank with no customers.
     */
-   @Autowired
-   public Bank(@Value("${bankName}") String name, DataSource dataSource) {
-      this.name = name;
-      this.dataSource = dataSource;
-      this.customers = dataSource.readCustomers();
-   }
+//   @Autowired
+//   public Bank(@Value("${bankName}") String name, DataSource dataSource) {
+//      this.name = name;
+//      this.dataSource = dataSource;
+//      this.customers = dataSource.readCustomers();
+//   }
 
    /**
     * Adds a customer to the bank.
@@ -43,9 +43,11 @@ public class Bank {
     * @return the matching customer, or null if no customer
     * matches
     */
-//   @PostConstruct
    public Customer findCustomer(int id) {
       return customers.get(id);
    }
+
+   @PostConstruct
+   public void initCustomerData() {this.customers = dataSource.readCustomers();   }
 }
 
